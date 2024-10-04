@@ -6,36 +6,26 @@ import java.util.Stack;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// Classe principal que executa o algoritmo de Flood Fill
 public class FloodFill {
 
     public static void main(String[] args) {
         try {
-            // Carrega a imagem de entrada
             File inputFile = new File("C:/Users/silvi/Documents/Faculdade/JAVA/TDE - PBL Listas Lineares - Flood Fill/src/teste.png");
             BufferedImage image = ImageIO.read(inputFile);
 
-            // Define a cor de preenchimento
             Color fillColor = Color.BLUE;
+            int startX = 50;
+            int startY = 50;
 
-            // Coordenadas iniciais para o preenchimento
-            int startX = 50; // Exemplo de coordenada X
-            int startY = 50; // Exemplo de coordenada Y
-
-            // Executa o Flood Fill utilizando Pilha (DFS)
             floodFillWithStack(image, startX, startY, fillColor);
 
-            // Salva a imagem resultante
             File outputFileStack = new File("testeee.png");
             ImageIO.write(image, "png", outputFileStack);
 
-            // Carrega a imagem novamente para preencher com Fila (BFS)
             image = ImageIO.read(inputFile);
 
-            // Executa o Flood Fill utilizando Fila (BFS)
             floodFillWithQueue(image, startX, startY, fillColor);
 
-            // Salva a imagem resultante
             File outputFileQueue = new File("testee.png");
             ImageIO.write(image, "png", outputFileQueue);
 
@@ -44,7 +34,6 @@ public class FloodFill {
         }
     }
 
-    // Método para Flood Fill utilizando Pilha (DFS)
     private static void floodFillWithStack(BufferedImage image, int x, int y, Color fillColor) {
         int targetColor = image.getRGB(x, y);
         Stack<Point> stack = new Stack<>();
@@ -57,8 +46,6 @@ public class FloodFill {
                 && image.getRGB(p.x, p.y) == targetColor && image.getRGB(p.x, p.y) != fillColor.getRGB()) {
                 
                 image.setRGB(p.x, p.y, fillColor.getRGB());
-
-                // Adiciona os pontos adjacentes à Pilha
                 stack.push(new Point(p.x + 1, p.y));
                 stack.push(new Point(p.x - 1, p.y));
                 stack.push(new Point(p.x, p.y + 1));
@@ -66,8 +53,7 @@ public class FloodFill {
             }
         }
     }
-    
-    // Método para Flood Fill utilizando Fila (BFS)
+
     private static void floodFillWithQueue(BufferedImage image, int x, int y, Color fillColor) {
         int targetColor = image.getRGB(x, y);
         Queue<Point> queue = new LinkedList<>();
@@ -80,8 +66,6 @@ public class FloodFill {
                 && image.getRGB(p.x, p.y) == targetColor && image.getRGB(p.x, p.y) != fillColor.getRGB()) {
                 
                 image.setRGB(p.x, p.y, fillColor.getRGB());
-
-                // Adiciona os pontos adjacentes à Fila
                 queue.add(new Point(p.x + 1, p.y));
                 queue.add(new Point(p.x - 1, p.y));
                 queue.add(new Point(p.x, p.y + 1));
@@ -91,7 +75,6 @@ public class FloodFill {
     }
 }
 
-// Classe auxiliar para representar um ponto (x, y) na imagem
 class Point {
     int x, y;
 

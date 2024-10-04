@@ -1,12 +1,10 @@
 import java.util.Scanner;
 
-// Classe para representar o nó da árvore Morse
 class MorseNode {
-    char character; // Caractere armazenado no nó
-    MorseNode left; // Subárvore para ponto (.)
-    MorseNode right; // Subárvore para traço (-)
+    char character;
+    MorseNode left;
+    MorseNode right;
 
-    // Construtor do nó
     MorseNode(char character) {
         this.character = character;
         this.left = null;
@@ -14,17 +12,14 @@ class MorseNode {
     }
 }
 
-// Classe que representa a Árvore Binária Morse
 class MorseTree {
     private MorseNode root;
 
-    // Construtor para inicializar a árvore
     MorseTree() {
-        root = new MorseNode('\0'); // Raiz da árvore
-        buildTree(); // Chama método para construir a árvore Morse
+        root = new MorseNode('\0');
+        buildTree();
     }
 
-    // Método para inserir caracteres na árvore conforme o código Morse
     private void insert(String morseCode, char character) {
         MorseNode currentNode = root;
         for (char symbol : morseCode.toCharArray()) {
@@ -40,10 +35,9 @@ class MorseTree {
                 currentNode = currentNode.right;
             }
         }
-        currentNode.character = character; // Define o caractere no nó final
+        currentNode.character = character;
     }
 
-    // Método para construir a árvore Morse
     private void buildTree() {
         insert(".-", 'A');
         insert("-...", 'B');
@@ -83,7 +77,6 @@ class MorseTree {
         insert("-----", '0');
     }
 
-    // Método para decodificar uma sequência Morse para um caractere
     public char decode(String morseCode) {
         MorseNode currentNode = root;
         for (char symbol : morseCode.toCharArray()) {
@@ -93,28 +86,25 @@ class MorseTree {
                 currentNode = currentNode.right;
             }
             if (currentNode == null) {
-                return '#'; // Retorna # se o código não for encontrado
+                return '#';
             }
         }
         return currentNode.character;
     }
 
-    // Método para decodificar uma palavra inteira em Morse
     public String decodeWord(String morseWord) {
         StringBuilder decodedWord = new StringBuilder();
-        String[] morseLetters = morseWord.split(" "); // Divide a palavra em letras Morse
+        String[] morseLetters = morseWord.split(" ");
         for (String morseLetter : morseLetters) {
             decodedWord.append(decode(morseLetter));
         }
         return decodedWord.toString();
     }
 
-    // Método para imprimir a árvore Morse no console (simples)
     public void printTree() {
         printSubTree(root, "");
     }
 
-    // Função recursiva para imprimir a árvore em pré-ordem
     private void printSubTree(MorseNode node, String indent) {
         if (node != null) {
             System.out.println(indent + (node.character == '\0' ? "." : node.character));
@@ -124,7 +114,6 @@ class MorseTree {
     }
 }
 
-// Classe principal para executar o programa
 public class Main {
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
